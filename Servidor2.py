@@ -31,8 +31,9 @@ print('\nEsperando por clientes: ')
 
 #cria uma nova instancia de servidor com uma porta e IP predefinidos
 servidor = SimpleXMLRPCServer((IP, PORTA))
-#registra função buscar para uso dos usuarios
+#registra função gerar numero para uso dos usuarios
 servidor.register_function(gerador, "ger")
+#registra função listar funções para uso dos usuarios
 servidor.register_function(list_fun, "list")
 #esse metodo mantem o servidor funcionando mesmo com a desconexão do usuario
 servidor.serve_forever()

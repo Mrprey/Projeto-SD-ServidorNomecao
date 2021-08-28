@@ -5,7 +5,7 @@ print('\tSERVIDOR')
 IP = 'localhost'
 PORTA = 8080
 
-server_list = {}
+server_list = {} #lista de servidores
 #função que busca pelos servidores diponiveis
 def buscar(nome):
     try:
@@ -13,6 +13,7 @@ def buscar(nome):
     except:
         return None
 
+#add de no servidor para pesquisa e setando o ip e porta
 def add(nome, descr):
     tam_list = server_list.__len__()
     try:
@@ -22,7 +23,7 @@ def add(nome, descr):
     except:
         None
 
-
+#gera a porta e ip do novo servidor
 def geradorConnect(num):
     return geradorIP(), geradorPorta(num+1)
 
