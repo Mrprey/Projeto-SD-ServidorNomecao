@@ -7,17 +7,27 @@ PORTA = 8080
 
 server_list = {} #lista de servidores
 #função que busca pelos servidores diponiveis
-def buscar(nome):
+def buscar_name(name):
     try:
-        return server_list[nome]
+        return server_list[name]
     except:
         return None
 
+def buscar_attr(attr):
+    try:
+        for name in server_list.keys():
+            for uni_attr in attr:
+                if uni_attr in server_list[name][2]:
+                    return server_list[name], name
+        return None, None
+    except:
+        return None, None
+
 #add de no servidor para pesquisa e setando o ip e porta
-def add(nome, descr):
+def add(nome, descr, attr):
     tam_list = server_list.__len__()
     try:
-        server_list[nome] = [geradorConnect(tam_list), descr]
+        server_list[nome] = [geradorConnect(tam_list), descr, attr]
         print(server_list)
         return server_list[nome][0][0], server_list[nome][0][1]
     except:
@@ -38,9 +48,11 @@ print('\nAVISO: O Não escrever no servidor.')
 print('\nEsperando por clientes: ')
 
 #cria uma nova instancia de servidor com uma porta e IP predefinidos
-servidor = SimpleXMLRPCServer((IP, PORTA))
+servidor = SimpleXMLRPCServer((IP, PORTA), allow_none=True)
 #registra função buscar para uso dos usuarios
-servidor.register_function(buscar, "buscar")
+servidor.register_function(buscar_name, "buscar_name")
+
+servidor.register_function(buscar_attr, 'buscar_attr')
 
 #registra função inserir servidor
 servidor.register_function(add, "add")

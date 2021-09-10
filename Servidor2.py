@@ -6,12 +6,13 @@ IP = ''
 PORTA = 0
 name = 'gerador'
 desc = 'Cria um número aleatorio'
+attr = ['aleatorio', 'numero', 'sorteio']
 
 #adicionando servidor ao servidor Nome
 server = xmlrpc.client.ServerProxy("http://{0}:{1}/".format('127.0.0.1', 8080))
 
 try:
-    IP, PORTA = server.add(name, desc)
+    IP, PORTA = server.add(name, desc, attr)
 except:
     None
 
