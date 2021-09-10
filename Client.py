@@ -1,22 +1,25 @@
 import xmlrpc.client
 from xmlrpc.server import SimpleXMLRPCRequestHandler
 
-
+#função para fazer conexão com servidor
 def connect(ip, porta):
 	servidor = xmlrpc.client.ServerProxy("http://{0}:{1}/".format(ip, porta), allow_none=True)
 
 	return servidor
 
+#função para buscar por servidores apartir dos atributos
 def busca_atrr(servidor, attr):
 	resposta, name = servidor.buscar_attr(attr)
 
 	return name, resposta
 
+#pede ao servidor para pesquisar se o servidor esta disponivel
 def busca_nome(servidor, name):
-	resposta = servidor.buscar_name(name)  # pede ao servidor para pesquisar se o servidor esta disponivel
+	resposta = servidor.buscar_name(name)  #
 
 	return resposta
 
+#verifica se digito do usuario esta correto
 def dig_num():
 	try:
 		n = int(input('\n- Digite a quantidades de atributos: '))
@@ -37,16 +40,21 @@ servidor = connect(IP, PORTA)
 entrada = ''
 resposta = None
 name = ''
+
+
 while entrada != 'fim':
 	entrada = input('\n- Digite qual tipo de pesquisa[nome, atributo, fim]: ').lower()
+
 	if entrada == 'nome':
 		entrada = 'fim'
 		name = input('\n- Digite o nome do serviço ou fim para buscar: ').lower()
 		resposta = busca_nome(servidor, name)
+
 	elif entrada == 'atributo':
 		entrada = 'fim'
 		n = dig_num()
 		attrs = []
+
 		for i in range(n):
 			attrs.append(input('\n- Digite o atributo para buscar: ').lower())
 		name, resposta = busca_atrr(servidor, attrs)

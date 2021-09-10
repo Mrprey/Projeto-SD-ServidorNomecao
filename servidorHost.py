@@ -13,11 +13,12 @@ def buscar_name(name):
     except:
         return None
 
+#função busca por um servidor com base nos atributos fornecidos pelo usuario
 def buscar_attr(attr):
     try:
-        for name in server_list.keys():
-            for uni_attr in attr:
-                if uni_attr in server_list[name][2]:
+        for name in server_list.keys(): #busca cada chave do dataset
+            for uni_attr in attr: #pega cada um dos atributos fornecidos pelo usuario
+                if uni_attr in server_list[name][2]: #verifica se o atributo existe na instancia da chave
                     return server_list[name], name
         return None, None
     except:
@@ -49,11 +50,10 @@ print('\nEsperando por clientes: ')
 
 #cria uma nova instancia de servidor com uma porta e IP predefinidos
 servidor = SimpleXMLRPCServer((IP, PORTA), allow_none=True)
-#registra função buscar para uso dos usuarios
+#registra função buscar por nomes
 servidor.register_function(buscar_name, "buscar_name")
-
+#registra função buscar por atributos
 servidor.register_function(buscar_attr, 'buscar_attr')
-
 #registra função inserir servidor
 servidor.register_function(add, "add")
 #esse metodo mantem o servidor funcionando mesmo com a desconexão do usuario
